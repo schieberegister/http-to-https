@@ -1,11 +1,12 @@
 pipeline:
   build:
     image: docker
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
     when:
       branch:
         include: [master, refs/tags/*]
     commands:
-      ##- export DOCKER_HOST=$${DOCKER_BUILD_HOST}
       - docker login $${DOCKER_RELEASE_REPOSITORY} -u $${DOCKER_RELEASE_REPOSITORY_USER} -p $${DOCKER_RELEASE_REPOSITORY_PASS}
       - docker buildx create --bootstrap --use
       - >
@@ -19,7 +20,6 @@ pipeline:
         exit 0
 
     secrets: [ 
-      docker_build_host,
       docker_release_repository,
       docker_release_repository_user,
       docker_release_repository_pass 
