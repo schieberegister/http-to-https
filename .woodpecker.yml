@@ -1,0 +1,26 @@
+pipeline:
+  build:
+    image: docker
+    when:
+      branch:
+        include: [master, refs/tags/*]
+    commands:
+      - export DOCKER_HOST=$${DOCKER_BUILD_HOST}
+      - docker login $${DOCKER_RELEASE_REPOSITORY} -u $${DOCKER_RELEASE_REPOSITORY_USER} -p $${DOCKER_RELEASE_REPOSITORY_PASS}
+      - docker buildx create --use
+      - >
+        [ "${CI_BUILD_EVENT}" == "tag" ] && export DOCKER_TAG="${CI_COMMIT_TAG}" || \
+          export DOCKER_TAG="${CI_COMMIT_BRANCH}"
+      - docker buildx build . -t $${DOCKER_RELEASE_REPOSITORY}/${CI_REPO_NAME}:$DOCKER_TAG --platform linux/arm64/v8,linux/amd64 --push
+      - >
+        [ "${CI_BUILD_EVENT}" == "tag" ] && docker tag $${DOCKER_RELEASE_REPOSITORY}/${CI_REPO_NAME}:$DOCKER_TAG \
+                                            $${DOCKER_RELEASE_REPOSITORY}/${CI_REPO_NAME}:latest \
+                                         && docker push $${DOCKER_RELEASE_REPOSITORY}/${CI_REPO_NAME}:latest || \
+        exit 0
+
+    secrets: [ 
+      docker_build_host,
+      docker_release_repository,
+      docker_release_repository_user,
+      docker_release_repository_pass 
+    ]
