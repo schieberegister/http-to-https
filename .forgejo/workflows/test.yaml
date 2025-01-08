@@ -3,10 +3,11 @@ run-name: ${{ forgejo.actor }} is testing out Gitea Actions 🚀
 on: [push]
 
 jobs:
-  Explore-Gitea-Actions:
+  Explore-Actions:
     runs-on: docker
     container:
       image: docker.io/alpine:latest
       steps:
-        - run: echo "Hello World"
+        - name: Greetings
+          run: echo "Hello World"
 
