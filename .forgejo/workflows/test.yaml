@@ -14,4 +14,5 @@ jobs:
           tags: latest
           containerfiles: |
             ./Containerfile
+      - run: echo ${{ env.GITHUB_REF_NAME }}
       
