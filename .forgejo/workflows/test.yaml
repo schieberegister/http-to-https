@@ -3,7 +3,7 @@ run-name: i hope it works 🚀
 on: [push]
 jobs:
   Print-A-Env:
-    runs-on: buildah-latest
+    runs-on: buildah
     steps:
       - run: echo Hello-World
       - run: echo $A_TEST_ENV_NAME_1
