@@ -8,7 +8,7 @@ jobs:
       - name: Check out the repository code
         uses: actions/checkout@v4
       - name: Build the Image
-        uses: redhat-actions/buildah-build@v2
+        uses: https://github.com/redhat-actions/buildah-build@v2
         with:
           image: testimage
           tags: latest
