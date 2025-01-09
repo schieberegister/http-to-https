@@ -24,8 +24,6 @@ jobs:
       - name: Push the image to the registry
         uses: https://github.com/redhat-actions/push-to-registry@v2
         with:
-          image: ${{ vars.IMAGE_NAME }}
-          tags: ${{ env.GITHUB_REF_NAME }}
-          registry: ${{ vars.REGISTRY }}
+          tags: ${{ vars.IMAGE_NAME }}:${{ env.GITHUB_REF_NAME }}
 
       
