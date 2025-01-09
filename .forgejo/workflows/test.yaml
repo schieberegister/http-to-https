@@ -6,6 +6,7 @@ jobs:
   Explore-Gitea-Actions:
     runs-on: docker
     steps:
+      - run: sudo apt-get update && sudo apt-get install buildah
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Buildah Action
