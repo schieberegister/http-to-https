@@ -1,9 +1,10 @@
-name: Gitea Actions Demo
-run-name: ${{ gitea.actor }} is testing out Gitea Actions 🚀
+name: Environment Test
+run-name: i hope it works 🚀
 on: [push]
-
 jobs:
-  Explore-Gitea-Actions:
-    runs-on: buldah
+  Print-A-Env:
+    runs-on: buildah-latest
     steps:
+      - run: echo Hello-World
       - run: echo $A_TEST_ENV_NAME_1
+      
