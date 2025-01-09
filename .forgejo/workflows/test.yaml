@@ -10,9 +10,14 @@ jobs:
       - name: Build the Image
         uses: https://github.com/redhat-actions/buildah-build@v2
         with:
-          image: testimage
-          tags: latest
+          image: ${{ var.IMAGE_NAME }}
+          tags: ${{ env.GITHUB_REF_NAME }}
           containerfiles: |
             ./Containerfile
-      - run: echo ${{ env.GITHUB_REF_NAME }}
+      - name: Login to the registry
+        uses: https://github.com/redhat-actions/podman-login@v1
+        with:
+          registry: ${{ vars.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
       
