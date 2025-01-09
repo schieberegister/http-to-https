@@ -10,7 +10,7 @@ jobs:
       - name: Build the Image
         uses: https://github.com/redhat-actions/buildah-build@v2
         with:
-          image: ${{ var.IMAGE_NAME }}
+          image: ${{ vars.IMAGE_NAME }}
           tags: ${{ env.GITHUB_REF_NAME }}
           containerfiles: |
             ./Containerfile
