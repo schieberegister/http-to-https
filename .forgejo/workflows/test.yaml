@@ -1,10 +1,11 @@
-name: Environment Test
-run-name: i hope it works 🚀
+name: Build on Push
+run-name: ${{ forgejo.actor }} has pushed
 on: [push]
 jobs:
   Print-A-Env:
-    runs-on: buildah
+    runs-on: default
     steps:
-      - run: echo Hello-World
-      - run: echo $A_TEST_ENV_NAME_1
+      - name: Check out the repository code
+        uses: actions/checkout@v4
+      - run: "ls -la"
       
