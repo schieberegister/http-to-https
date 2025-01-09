@@ -4,16 +4,6 @@ on: [push]
 
 jobs:
   Explore-Gitea-Actions:
-    runs-on: docker
+    runs-on: buldah
     steps:
-      - run:  apt-get update && apt-get install buildah -y
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Buildah Action
-        id: build-image
-        uses: https://github.com/redhat-actions/buildah-build@v2
-        with:
-          image: docker.io/schieberegister/http-to-https
-          tags: latest
-          containerfiles: |
-            ./Dockerfile
+      - run: echo $A_TEST_ENV_NAME_1
