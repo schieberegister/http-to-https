@@ -20,4 +20,5 @@ jobs:
           registry: ${{ vars.REGISTRY }}
           username: ${{ secrets.REGISTRY_USER }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
+          auth_file_path: /tmp/auth.json
       
