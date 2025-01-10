@@ -17,6 +17,9 @@ jobs:
         with:
           image: ${{ vars.IMAGE_NAME }}
           tags: ${{ env.GITHUB_REF_NAME }} latest
+          platforms: |
+            linux/amd64
+            linux/arm64
           containerfiles: |
             ./Containerfile
       - name: Login to the registry
