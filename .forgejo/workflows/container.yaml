@@ -10,7 +10,7 @@ jobs:
   build_and_push:
     runs-on: default
     steps:
-      - name: Check out the repository code for ${{ env.GITHUB_REF }}
+      - name: Check out the repository code
         uses: actions/checkout@v4
       - name: Build the Image
         uses: https://github.com/redhat-actions/buildah-build@v2
