@@ -1,6 +1,6 @@
 # HTTP to HTTPS redirect
 
-[![schieberegister/http-to-https](https://img.shields.io/badge/docker-hope/redirect--http--to--https-brightgreen.svg)](https://hub.docker.com/repository/docker/schieberegister/http-to-https/general)
+![DockerHub](https://img.shields.io/badge/dockerhub-schieberegister%2Fhttp--to--https-blue?logo=docker)
 
 Small container, that simply redirects all HTTP requests to HTTPS.  
 Can be used with rancher Load balancer.  
