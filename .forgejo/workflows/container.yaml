@@ -1,9 +1,12 @@
 name: Build with buildah and Push to Container Registry
-on: 
+on:
+  workflow_dispatch:
   push:
+    paths-ignore:
+      - .forgejo/**
+      - README.md
     branches:
       - main
-      - develop
     tags:
       - '**'
 jobs:
@@ -36,5 +39,30 @@ jobs:
         uses: https://github.com/redhat-actions/push-to-registry@v2
         with:
           tags: ${{ vars.IMAGE_NAME }}:latest
-
-      
+      - name: Check if .dockerhub exists
+        if: startsWith(github.ref, 'refs/tags/v')
+        id: check_dockerhub
+        uses: https://github.com/andstor/file-existence-action@v1
+        with:
+          files: '.dockerhub'
+      - name: Tag image for dockerhub
+        if: steps.check_dockerhub.outputs.files_exists == 'true'
+        run: |
+          buildah tag ${{ vars.IMAGE_NAME }}:${{ env.GITHUB_REF_NAME }} docker.io/${{ secrets.DOCKERHUB_USER }}/${{ vars.DOCKERHUB_IMAGE_NAME }}:${{ env.GITHUB_REF_NAME }}
+          buildah tag ${{ vars.IMAGE_NAME }}:${{ env.GITHUB_REF_NAME }} docker.io/${{ secrets.DOCKERHUB_USER }}/${{ vars.DOCKERHUB_IMAGE_NAME }}:latest
+      - name: Login to Dockerhub
+        if: steps.check_dockerhub.outputs.files_exists == 'true'
+        uses: https://github.com/redhat-actions/podman-login@v1
+        with:
+          registry: docker.io
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          auth_file_path: $HOME/.docker/config.json
+      - name: Push to Dockerhub
+        if: steps.check_dockerhub.outputs.files_exists == 'true'
+        uses: https://github.com/redhat-actions/push-to-registry@v2
+        with:
+          registry: docker.io
+          image: ${{ secrets.DOCKERHUB_USER }}/${{ vars.DOCKERHUB_IMAGE_NAME }}
+          tags: ${{ env.GITHUB_REF_NAME }} latest
+ 
