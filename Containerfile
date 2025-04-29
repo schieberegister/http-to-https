@@ -1,4 +1,4 @@
-FROM nginx:1.27.3-alpine
+FROM docker.io/nginx:1.27.5-alpine
 
 # Copy the nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
